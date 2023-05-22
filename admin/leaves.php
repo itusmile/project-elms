@@ -19,7 +19,7 @@ include_once 'includes/header.php'
                     <h4 class="text-primary">All leaves in the database</h4>
                 </div>
                 <div class="">
-                    <button class="btn btn-primary" type="button" id="btnAddNewLeave" data-bs-toggle="modal" data-bs-target="#addNewLeaveModal">Add New Leave</button>
+                    <button class="btn btn-primary" type="button" id="btnAddNewLeave" data-bs-toggle="modal" data-bs-target="#formLeaveModal">Add New Leave</button>
                 </div>
             </div>
         </div>

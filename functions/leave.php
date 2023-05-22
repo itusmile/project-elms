@@ -16,7 +16,7 @@ if (isset($_POST['add'])) {
     $note = $util->testInput($_POST['note']);
 
     if ($req->insert($request, $start_date, $end_date, $count, $unit, $user_id, $note)) {
-        echo $util->showMessage("success", "User inserted successfully!");
+        echo $util->showMessage("success", "Leave inserted successfully!");
     } else {
         echo $util->showMessage("danger", "Something went wrong.");
     }
@@ -47,25 +47,27 @@ if (isset($_GET['read'])) {
     }
 }
 
-// if (isset($_GET['edit'])) {
-//     $id = $_GET['id'];
-//     $user = $emp->readOne($id);
-//     echo json_encode($user);
-// }
+if (isset($_GET['edit'])) {
+    $id = $_GET['id'];
+    $data = $req->readOne($id);
+    echo json_encode($data);
+}
 
-// if (isset($_POST['update'])) {
-//     $id = $util->testInput($_POST['id']);
-//     $fname = $util->testInput($_POST['fname']);
-//     $lname = $util->testInput($_POST['lname']);
-//     $email = $util->testInput($_POST['email']);
-//     $phone = $util->testInput($_POST['phone']);
+if (isset($_POST['update'])) {
+    $request = $util->testInput($_POST['request']);
+    $start_date = $util->testInput($_POST['start_date']);
+    $end_date = $util->testInput($_POST['end_date']);
+    $count = $util->testInput($_POST['count']);
+    $unit = $util->testInput($_POST['unit']);
+    $note = $util->testInput($_POST['note']);
+    $id = $util->testInput($_POST['leave_id']);
 
-//     if ($emp->update($id, $fname, $lname, $email, $phone)) {
-//         echo $util->showMessage("success", "User updated successfully!");
-//     } else {
-//         echo $util->showMessage("danger", "Something went wrong!");
-//     }
-// }
+    if ($req->update($id, $request, $start_date, $end_date, $count, $unit, $note)) {
+        echo $util->showMessage("success", "User updated successfully!");
+    } else {
+        echo $util->showMessage("danger", "Something went wrong!");
+    }
+}
 
 // if (isset($_GET['delete'])) {
 //     $id = $_GET['id'];

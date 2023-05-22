@@ -8,9 +8,9 @@ const formId = document.getElementById("leave-form");
 const hiddenId = formId.getElementsByClassName("hidden-id")[0];
 const btnSubmitForm = document.getElementById("form-submit-btn");
 
-// const formModalId = document.getElementById("formEmployeeModal");
-// const formModal = new bootstrap.Modal(formModalId);
-// const formModalTitle = formModalId.getElementsByClassName("modal-title")[0];
+const formModalId = document.getElementById("formLeaveModal");
+const formModal = new bootstrap.Modal(formModalId);
+const formModalTitle = formModalId.getElementsByClassName("modal-title")[0];
 
 // const selectDepartment = document.getElementById("department_id");
 
@@ -38,7 +38,13 @@ formId.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const formData = new FormData(formId);
-  formData.append("add", 1);
+
+  if (hiddenId.value == "") {
+    formData.append("add", 1);
+    action = "add";
+  } else {
+    formData.append("update", 1);
+  }
 
   // alert(addForm.checkValidity());
 
@@ -48,7 +54,7 @@ formId.addEventListener("submit", async (e) => {
     formId.classList.add("was-validated");
     return false;
   } else {
-    document.getElementById("add-leave-btn").value = "Please Wait...";
+    btnSubmitForm.value = "Please Wait...";
 
     const data = await fetch("../functions/leave.php", {
       method: "POST",
@@ -56,10 +62,9 @@ formId.addEventListener("submit", async (e) => {
     });
     const response = await data.text();
     showAlert.innerHTML = response;
-    document.getElementById("add-leave-btn").value = "Add Leave";
     formId.reset();
     formId.classList.remove("was-validated");
-    addModal.hide();
+    formModal.hide();
     fetchAllLeaves();
   }
 });
@@ -74,53 +79,30 @@ const fetchAllLeaves = async () => {
 
 fetchAllLeaves();
 
-// tbody.addEventListener("click", (e) => {
-//   if (e.target && e.target.matches("a.editlink")) {
-//     e.preventDefault();
-//     let id = e.target.getAttribute("id");
-//     editUser(id);
-//   }
-// });
+tbody.addEventListener("click", (e) => {
+  if (e.target && e.target.matches("a.editlink")) {
+    e.preventDefault();
+    let id = e.target.getAttribute("id");
+    editLeave(id);
+  }
+});
 
-// const editUser = async (id) => {
-//   const data = await fetch(`../functions/employee.php?edit=1&id=${id}`, {
-//     method: "GET",
-//   });
-//   const response = await data.json();
-//   document.getElementById("id").value = response.id;
-//   document.getElementById("fname").value = response.first_name;
-//   document.getElementById("lname").value = response.last_name;
-//   document.getElementById("email").value = response.email;
-//   document.getElementById("phone").value = response.phone;
-// };
-
-// updateForm.addEventListener("submit", async (e) => {
-//   e.preventDefault();
-
-//   const formData = new FormData(updateForm);
-//   formData.append("update", 1);
-
-//   if (updateForm.checkValidity() === false) {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     updateForm.classList.add("was-validated");
-//     return false;
-//   } else {
-//     document.getElementById("edit-user-btn").value = "Please Wait...";
-
-//     const data = await fetch("../functions/employee.php", {
-//       method: "POST",
-//       body: formData,
-//     });
-//     const response = await data.text();
-//     showAlert.innerHTML = response;
-//     document.getElementById("edit-user-btn").value = "Edit User";
-//     updateForm.reset();
-//     updateForm.classList.remove("was-validated");
-//     editModal.hide();
-//     fetchAllUsers();
-//   }
-// });
+const editLeave = async (id) => {
+  const data = await fetch(`../functions/leave.php?edit=1&id=${id}`, {
+    method: "GET",
+  });
+  const response = await data.json();
+  // alert(response.leave_id);
+  document.getElementById("leave_id").value = response.leave_id;
+  document.getElementById("user_id").value = response.employee_id;
+  document.getElementById("request").value = response.request;
+  document.getElementById("count").value = response.count;
+  document.getElementById("unit").value = response.unit;
+  // alert(response.start_date);
+  document.getElementById("start_date").value = response.start_date;
+  document.getElementById("end_date").value = response.end_date;
+  document.getElementById("note").value = response.note;
+};
 
 // tbody.addEventListener("click", (e) => {
 //   if (e.target && e.target.matches("a.deletelink")) {
@@ -138,3 +120,9 @@ fetchAllLeaves();
 //   showAlert.innerHTML = response;
 //   fetchAllUsers();
 // };
+
+formModalId.addEventListener("hidden.bs.modal", () => {
+  formModalTitle.innerHTML = "";
+  formId.reset();
+  btnSubmitForm.value = "";
+});

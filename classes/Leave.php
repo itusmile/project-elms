@@ -56,28 +56,37 @@ class Leave extends Config
         return $result;
     }
 
-    // public function readOne($id)
-    // {
-    //     $sql = "SELECT * FROM users WHERE id = :id";
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute(['id' => $id]);
-    //     $result = $stmt->fetch();
-    //     return $result;
-    // }
+    public function readOne($id)
+    {
+        $sql = "SELECT
+            *
+        FROM
+            tbl_leaves l
+        INNER JOIN tbl_employees e ON
+            l.employee_id = e.employee_id
+        WHERE
+            l.leave_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        $result = $stmt->fetch();
+        return $result;
+    }
 
-    // public function update($id, $fname, $lname, $email, $phone)
-    // {
-    //     $sql = "UPDATE users SET first_name = :fname, last_name = :lname, email = :email, phone = :phone WHERE id = :id";
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute([
-    //         'fname' => $fname,
-    //         'lname' => $lname,
-    //         'email' => $email,
-    //         'phone' => $phone,
-    //         'id' => $id
-    //     ]);
-    //     return true;
-    // }
+    public function update($id, $request, $start_date, $end_date, $count, $unit, $note)
+    {
+        $sql = "UPDATE tbl_leaves SET request = :request, start_date = :start_date, end_date = :end_date, count = :count, unit = :unit, note = :note WHERE leave_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'request' => $request,
+            'start_date' => $start_date,
+            'end_date' => $end_date,
+            'count' => $count,
+            'unit' => $unit,
+            'note' => $note,
+            'id' => $id
+        ]);
+        return true;
+    }
 
     public function delete($id)
     {

@@ -8,61 +8,49 @@
             </div>
             <form id="leave-form" class="p-2" novalidate>
                 <div class="modal-body">
+                <input type="hidden" class="hidden-id" id="leave_id" name="leave_id">
                     <div class="row mb-3 gx-3">
                         <div class="col">
-                            <input type="text" name="username" class="form-control form-control-lg" placeholder="Enter Username" required>
-                            <div class="invalid-feedback">Username is required!</div>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="password" class="form-control form-control-lg" placeholder="Enter Password" required>
-                            <div class="invalid-feedback">Password is required!</div>
-                        </div>
-                    </div>
-                    <div class="row mb-3 gx-3">
-                        <div class="col">
-                            <input type="text" name="fname" class="form-control form-control-lg" placeholder="Enter First Name" required>
-                            <div class="invalid-feedback">First name is required!</div>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="lname" class="form-control form-control-lg" placeholder="Enter Last Name" required>
-                            <div class="invalid-feedback">Last name is required!</div>
-                        </div>
-                        <div class="col">
-                            <input type="text" name="nname" class="form-control form-control-lg" placeholder="Enter Nick Name" required>
-                            <div class="invalid-feedback">Nick name is required!</div>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <input type="email" name="email" class="form-control form-control-lg" placeholder="Enter E-Mail">
-                    </div>
-                    <div class="mb-3">
-                        <input type="text" name="phone" class="form-control form-control-lg" placeholder="Enter Phone" required>
-                        <div class="invalid-feedback">Phone is required!</div>
-                    </div>
-                    <div class="row mb-3 gx-3">
-                        <div class="col">
-                            <select type="text" name="department_id" id="department_id" class="form-select form-control-lg">
-                                <!-- Department Read Function -->
+                            <select type="text" name="user_id" id="user_id" class="form-select form-control-lg">
+
                             </select>
                         </div>
                     </div>
                     <div class="row mb-3 gx-3">
                         <div class="col">
-                            <input type="text" name="leave" value="5" class="form-control form-control-lg" placeholder="Enter Leave" required>
-                            <div class="invalid-feedback">Leave is required!</div>
+                            <select type="text" name="request" id="request" class="form-select form-control-lg">
+                                <option>Leave</option>
+                                <option>Sick</option>
+                                <option>Vacation</option>
+                            </select>
                         </div>
                         <div class="col">
-                            <input type="text" name="sick" value="6" class="form-control form-control-lg" placeholder="Enter Sick" required>
-                            <div class="invalid-feedback">Sick is required!</div>
+                            <input type="text" name="count" id="count" class="form-control form-control-lg" placeholder="Enter Count" required>
+                            <div class="invalid-feedback">Sort Name is required!</div>
                         </div>
                         <div class="col">
-                            <input type="text" name="vacation" value="7" class="form-control form-control-lg" placeholder="Enter Vacation" required>
-                            <div class="invalid-feedback">Vacation is required!</div>
+                            <select type="text" name="unit" id="unit" class="form-select form-control-lg">
+                                <option>Day</option>
+                                <option>AM</option>
+                                <option>PM</option>
+                            </select>
                         </div>
                     </div>
+                    <div class="row mb-3 gx-3">
+                        <div class="col">
+                            <input type="date" name="start_date" id="start_date" class="form-control form-control-lg" placeholder="Enter Start Date" required>
+                            </select>
+                            <div class="invalid-feedback">Department Name is required!</div>
+                        </div>
+                        <div class="col">
+                            <input type="date" name="end_date" id="end_date" class="form-control form-control-lg" placeholder="Enter End Date" required>
+                            <div class="invalid-feedback">Sort Name is required!</div>
+                        </div>
+                    </div>
+                    <input type="text" name="note" id="note" class="form-control form-control-lg mb-3" placeholder="Enter Note">
                 </div>
                 <div class="modal-footer">
-                    <input type="submit" value="Add User" class="btn btn-primary btn-block btn-lg" id="add-user-btn">
+                    <input type="submit" value="Add Leave" class="btn btn-primary" id="form-submit-btn">
                 </div>
             </form>
         </div>
