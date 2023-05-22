@@ -10,7 +10,7 @@ include_once 'includes/header.php'
 <body>
 
     <?php include_once 'includes/navbar.php' ?>
-    <?php include_once '../includes/modal.php' ?>
+    <?php include_once '../includes/modals/department/modal.php' ?>
 
     <div class="container">
         <div class="row mt-4">
@@ -19,7 +19,7 @@ include_once 'includes/header.php'
                     <h4 class="text-primary">All department in the database</h4>
                 </div>
                 <div class="">
-                    <button class="btn btn-primary" type="button" id="btnAddNewDepartment" data-bs-toggle="modal" data-bs-target="#addNewDepartmentModal">Add New Department</button>
+                    <button class="btn btn-primary" type="button" id="btnAddNewDepartment" data-bs-toggle="modal" data-bs-target="#formDepartmentModal">Add New Department</button>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@ include_once 'includes/header.php'
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-spriped table-boredered text-center">
+                    <table class="table table-spriped table-boredered text-center" id="table-department">
                         <thead>
                             <tr>
                                 <th>ID</th>

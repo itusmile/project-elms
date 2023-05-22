@@ -33,7 +33,7 @@ class Leave extends Config
 
     public function read()
     {
-        $sql = "SELECT * FROM tbl_leaves INNER JOIN tbl_employees ON tbl_leaves.employee_id = tbl_employees.id";
+        $sql = "SELECT * FROM tbl_leaves l INNER JOIN tbl_employees e ON l.employee_id = e.employee_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -63,13 +63,13 @@ class Leave extends Config
     //     return true;
     // }
 
-    // public function delete($id)
-    // {
-    //     $sql = "DELETE FROM tbl_employees WHERE id = :id";
-    //     $stmt = $this->conn->prepare($sql);
-    //     $stmt->execute([
-    //         'id' => $id
-    //     ]);
-    //     return true;
-    // }
+    public function delete($id)
+    {
+        $sql = "DELETE FROM tbl_leaves WHERE leave_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $id
+        ]);
+        return true;
+    }
 }

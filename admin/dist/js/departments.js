@@ -1,13 +1,27 @@
-const addForm = document.getElementById("add-department-form");
-const showAlert = document.getElementById("showAlert");
 const addBtn = document.getElementById("btnAddNewDepartment");
-const addModal = new bootstrap.Modal(
-  document.getElementById("addNewDepartmentModal")
-);
-const tbody = document.querySelector("tbody");
-// const updateForm = document.getElementById("edit-department-form");
-// const editModal = new bootstrap.Modal(document.getElementById("editUserModal"));
+
+const table = document.getElementById("table-department");
+const tbody = table.getElementsByTagName("tbody")[0];
+
+const form = document.getElementById("department-form");
+const hiddenId = form.getElementsByClassName("hidden-id")[0];
+const btnSubmitForm = document.getElementById("form-submit-btn");
+
+// const viewModalId = document.getElementById("viewDepartmentModal");
+// const viewModal = new bootstrap.Modal(viewModalId);
+// const viewModalTitle = viewModalId.getElementsByClassName("modal-title")[0];
+// const viewModalBody = viewModalId.getElementsByClassName("modal-body")[0];
+
+const formModalId = document.getElementById("formDepartmentModal");
+const formModal = new bootstrap.Modal(formModalId);
+const formModalTitle = formModalId.getElementsByClassName("modal-title")[0];
+
 // const selectDepartment = document.getElementById("department_id");
+
+const depName = document.getElementById("department_name");
+const sortName = document.getElementById("sort_name");
+
+const showAlert = document.getElementById("showAlert");
 
 const fetchAllDepartments = async () => {
   const data = await fetch("../functions/department.php?read=1", {
@@ -19,21 +33,29 @@ const fetchAllDepartments = async () => {
 
 fetchAllDepartments();
 
-addForm.addEventListener("submit", async (e) => {
+addBtn.addEventListener("click", async () => {
+  formModalTitle.innerHTML = "Add New Department";
+  btnSubmitForm.value = "Add";
+});
+
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(addForm);
-  formData.append("add", 1);
+  const formData = new FormData(form);
 
-  // alert(addForm.checkValidity());
+  if (hiddenId.value == "") {
+    formData.append("add", 1);
+  } else {
+    formData.append("update", 1);
+  }
 
-  if (addForm.checkValidity() === false) {
+  if (form.checkValidity() === false) {
     e.preventDefault();
     e.stopPropagation();
-    addForm.classList.add("was-validated");
+    form.classList.add("was-validated");
     return false;
   } else {
-    document.getElementById("add-department-btn").value = "Please Wait...";
+    btnSubmitForm.value = "Please Wait...";
 
     const data = await fetch("../functions/department.php", {
       method: "POST",
@@ -41,85 +63,53 @@ addForm.addEventListener("submit", async (e) => {
     });
     const response = await data.text();
     showAlert.innerHTML = response;
-    document.getElementById("add-department-btn").value = "Add Department";
-    addForm.reset();
-    addForm.classList.remove("was-validated");
-    addModal.hide();
+    form.reset();
+    form.classList.remove("was-validated");
+    formModal.hide();
     fetchAllDepartments();
   }
 });
 
-// const fetchAllUsers = async () => {
-//   const data = await fetch("../functions/employee.php?read=1", {
-//     method: "GET",
-//   });
-//   const response = await data.text();
-//   tbody.innerHTML = response;
-// };
+tbody.addEventListener("click", (e) => {
+  if (e.target && e.target.matches("a.editlink")) {
+    e.preventDefault();
+    editDepartment(e.target.getAttribute("id"));
+  }
+  if (e.target && e.target.matches("a.deletelink")) {
+    e.preventDefault();
+    deleteDepartment(e.target.getAttribute("id"));
+  }
+});
 
-// fetchAllUsers();
+const editDepartment = async (id) => {
+  const data = await fetch(`../functions/department.php?edit=1&id=${id}`, {
+    method: "GET",
+  });
+  const response = await data.json();
+  formModalTitle.innerHTML = "Edit Department";
+  hiddenId.value = response.department_id;
+  depName.value = response.department_name;
+  sortName.value = response.dep_name;
+  btnSubmitForm.value = "Update";
+};
 
-// tbody.addEventListener("click", (e) => {
-//   if (e.target && e.target.matches("a.editlink")) {
-//     e.preventDefault();
-//     let id = e.target.getAttribute("id");
-//     editUser(id);
-//   }
-// });
+const deleteDepartment = async (id) => {
+  const dep = await fetch(`../functions/department.php?edit=1&id=${id}`, {
+    method: "GET",
+  });
+  const response = await dep.json();
+  if (confirm("Delete all employee and leave request with user on " + response.department_name)) {
+    const data = await fetch(`../functions/department.php?delete=1&id=${id}`, {
+      method: "GET",
+    });
+    const response = await data.text();
+    showAlert.innerHTML = response;
+    fetchAllDepartments();
+  }
+};
 
-// const editUser = async (id) => {
-//   const data = await fetch(`../functions/employee.php?edit=1&id=${id}`, {
-//     method: "GET",
-//   });
-//   const response = await data.json();
-//   document.getElementById("id").value = response.id;
-//   document.getElementById("fname").value = response.first_name;
-//   document.getElementById("lname").value = response.last_name;
-//   document.getElementById("email").value = response.email;
-//   document.getElementById("phone").value = response.phone;
-// };
-
-// updateForm.addEventListener("submit", async (e) => {
-//   e.preventDefault();
-
-//   const formData = new FormData(updateForm);
-//   formData.append("update", 1);
-
-//   if (updateForm.checkValidity() === false) {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     updateForm.classList.add("was-validated");
-//     return false;
-//   } else {
-//     document.getElementById("edit-user-btn").value = "Please Wait...";
-
-//     const data = await fetch("../functions/employee.php", {
-//       method: "POST",
-//       body: formData,
-//     });
-//     const response = await data.text();
-//     showAlert.innerHTML = response;
-//     document.getElementById("edit-user-btn").value = "Edit User";
-//     updateForm.reset();
-//     updateForm.classList.remove("was-validated");
-//     editModal.hide();
-//     fetchAllUsers();
-//   }
-// });
-
-// tbody.addEventListener("click", (e) => {
-//   if (e.target && e.target.matches("a.deletelink")) {
-//     e.preventDefault();
-//     let id = e.target.getAttribute("id");
-//     deleteUser(id);
-//   }
-// });
-
-// const deleteUser = async (id) => {
-//   const data = await fetch(`../functions/employee.php?delete=1&id=${id}`, {
-//     method: "GET",
-//   });
-//   const response = await data.text();
-//   showAlert.innerHTML = response;
-//   fetchAllUsers();
-// };
+formModalId.addEventListener("hidden.bs.modal", () => {
+  formModalTitle.innerHTML = "";
+  form.reset();
+  btnSubmitForm.value = "";
+});

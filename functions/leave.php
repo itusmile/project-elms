@@ -28,13 +28,13 @@ if (isset($_GET['read'])) {
     if ($reqs) {
         foreach ($reqs as $row) {
             $output .= "<tr>
-            <td>" . $row['id'] . "</td>
+            <td>" . $row['leave_id'] . "</td>
             <td>" . $row['first_name'] . ' ' . $row['last_name'] . ' '  . $row['request'] . "</td>
             <td>" . $row['start_date'] . ' - ' . $row['end_date'] . ' ' . $row['count'] . ' ' . $row['unit'] . "</td>
             <td>" . $row['status'] . "</td>
             <td>
-                <a href='#' id='" . $row['id'] . "' class='btn btn-success btn-sm rounded py-0 editlink' data-bs-toggle='modal' data-bs-target='#editUserModal'>Edit</a>
-                <a href='#' id='" . $row['id'] . "' class='btn btn-danger btn-sm rounded py-0 deletelink'>Delete</a>
+                <a href='#' id='" . $row['leave_id'] . "' class='btn btn-success btn-sm rounded py-0 editlink' data-bs-toggle='modal' data-bs-target='#editUserModal'>Edit</a>
+                <a href='#' id='" . $row['leave_id'] . "' class='btn btn-danger btn-sm rounded py-0 deletelink'>Delete</a>
             </td>
             </tr>";
         }

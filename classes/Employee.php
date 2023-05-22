@@ -50,6 +50,15 @@ class Employee extends Config
         $result = $stmt->fetch();
         return $result;
     }
+    
+    public function readByForeignKey($fk_id)
+    {
+        $sql = "SELECT * FROM tbl_leaves WHERE employee_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute(['id' => $fk_id]);
+        $result = $stmt->fetchAll();
+        return $result;
+    }
 
     public function checkUsername($username)
     {
@@ -76,7 +85,7 @@ class Employee extends Config
 
     public function delete($id)
     {
-        $sql = "DELETE FROM tbl_employees WHERE id = :id";
+        $sql = "DELETE FROM tbl_employees WHERE employee_id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $id
