@@ -1,10 +1,27 @@
-const addForm = document.getElementById("add-leave-form");
-const showAlert = document.getElementById("showAlert");
+// const addBtn = document.getElementById("btnAddNewEmployee");
 const addBtn = document.getElementById("btnAddNewLeave");
-const addModal = new bootstrap.Modal(
-  document.getElementById("addNewLeaveModal")
-);
-const tbody = document.querySelector("tbody");
+
+const table = document.getElementById("table-leave");
+const tbody = table.getElementsByTagName("tbody")[0];
+
+const formId = document.getElementById("leave-form");
+const hiddenId = formId.getElementsByClassName("hidden-id")[0];
+const btnSubmitForm = document.getElementById("form-submit-btn");
+
+// const formModalId = document.getElementById("formEmployeeModal");
+// const formModal = new bootstrap.Modal(formModalId);
+// const formModalTitle = formModalId.getElementsByClassName("modal-title")[0];
+
+// const selectDepartment = document.getElementById("department_id");
+
+// const showAlert = document.getElementById("showAlert");
+
+// const addForm = document.getElementById("add-leave-form");
+// const showAlert = document.getElementById("showAlert");
+// const addModal = new bootstrap.Modal(
+//   document.getElementById("addNewLeaveModal")
+// );
+// const tbody = document.querySelector("tbody");
 // const updateForm = document.getElementById("edit-user-form");
 // const editModal = new bootstrap.Modal(document.getElementById("editUserModal"));
 const selectUser = document.getElementById("user_id");
@@ -17,18 +34,18 @@ addEventListener("DOMContentLoaded", async () => {
   selectUser.innerHTML = response;
 });
 
-addForm.addEventListener("submit", async (e) => {
+formId.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(addForm);
+  const formData = new FormData(formId);
   formData.append("add", 1);
 
   // alert(addForm.checkValidity());
 
-  if (addForm.checkValidity() === false) {
+  if (formId.checkValidity() === false) {
     e.preventDefault();
     e.stopPropagation();
-    addForm.classList.add("was-validated");
+    formId.classList.add("was-validated");
     return false;
   } else {
     document.getElementById("add-leave-btn").value = "Please Wait...";
@@ -40,8 +57,8 @@ addForm.addEventListener("submit", async (e) => {
     const response = await data.text();
     showAlert.innerHTML = response;
     document.getElementById("add-leave-btn").value = "Add Leave";
-    addForm.reset();
-    addForm.classList.remove("was-validated");
+    formId.reset();
+    formId.classList.remove("was-validated");
     addModal.hide();
     fetchAllLeaves();
   }

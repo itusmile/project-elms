@@ -61,11 +61,22 @@ class Department extends Config
 
     public function delete($id)
     {
-        $sql_d = "DELETE FROM tbl_departments WHERE department_id = :id";
-        $stmt = $this->conn->prepare($sql_d);
+        $sql = "DELETE FROM tbl_departments WHERE department_id = :id";
+        $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $id
         ]);
         return true;
+    }
+
+    public function memberCount($department_id)
+    {
+        $sql = "SELECT count(*) FROM tbl_employees WHERE department_id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute([
+            'id' => $department_id
+        ]);
+        $result = $stmt->fetchColumn(0);
+        return $result;
     }
 }

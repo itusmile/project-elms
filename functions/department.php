@@ -26,15 +26,17 @@ if (isset($_GET['read'])) {
     $output = '';
     if ($deps) {
         foreach ($deps as $row) {
-            $output .= "<tr>
-            <td>" . $row['department_id'] . "</td>
-            <td>" . $row['department_name'] . "</td>
-            <td>" . $row['dep_name'] . "</td>
-            <td>
-                <a href='#' id='" . $row['department_id'] . "' class='btn btn-success btn-sm rounded py-0 editlink' data-bs-toggle='modal' data-bs-target='#formDepartmentModal'>Edit</a>
-                <a href='#' id='" . $row['department_id'] . "' class='btn btn-danger btn-sm rounded py-0 deletelink'>Delete</a>
-            </td>
-            </tr>";
+            if ($row['department_id'] > 0) {
+                $output .= "<tr>
+                <td>" . $dep->memberCount($row['department_id']) . "</td>
+                <td>" . $row['department_name'] . "</td>
+                <td>" . $row['dep_name'] . "</td>
+                <td>
+                    <a href='#' id='" . $row['department_id'] . "' class='btn btn-success btn-sm rounded py-0 editlink' data-bs-toggle='modal' data-bs-target='#formDepartmentModal'>Edit</a>
+                    <a href='#' id='" . $row['department_id'] . "' class='btn btn-danger btn-sm rounded py-0 deletelink'>Delete</a>
+                </td>
+                </tr>";
+            }
         }
         echo $output;
     } else {
@@ -49,7 +51,9 @@ if (isset($_GET['set'])) {
     $output = '';
     if ($deps) {
         foreach ($deps as $row) {
-            $output .= "<option value=" . $row['department_id'] . ">" . $row['department_name'] . "</option>";
+            if ($row['department_id'] > 0) {
+                $output .= "<option value=" . $row['department_id'] . ">" . $row['department_name'] . "</option>";
+            }
         }
         echo $output;
     } else {
@@ -82,14 +86,8 @@ if (isset($_GET['delete'])) {
     $id = $_GET['id'];
     $result_emp = $dep->readByForeignKey($id);
     foreach ($result_emp as $row) {
-        $result_req = $emp->readByForeignKey($row["employee_id"]);
-        foreach ($result_req as $row) {
-            $req->delete($row['leave_id']);
-        }
-        $emp->delete($row['employee_id']);
+        $emp->nullDep($row['employee_id']);
     }
-
-
 
     if ($dep->delete($id)) {
         echo $util->showMessage("success", "Department Delete successfully!");

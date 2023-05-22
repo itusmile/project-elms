@@ -3,19 +3,19 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <div class="modal-title" id="modal-title"></div>
+                <div class="modal-title fs-4"></div>
                 <button class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form id="employee-form" class="p-2" novalidate>
-                    <input type="hidden" id="employee_id">
+            <form id="employee-form" class="p-2" novalidate>
+                <div class="modal-body">
+                    <input type="hidden" class="hidden-id" name="employee_id">
                     <div class="row mb-3 gx-3" id="user_password">
                         <div class="col">
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Username" required>
                             <div class="invalid-feedback">Username is required!</div>
                         </div>
                         <div class="col">
-                            <input type="text" name="password" class="form-control" placeholder="Enter Password" required>
+                            <input type="text" name="password" id="password" class="form-control" placeholder="Enter Password" required>
                             <div class="invalid-feedback">Password is required!</div>
                         </div>
                     </div>
@@ -61,11 +61,11 @@
                             <div class="invalid-feedback">Vacation is required!</div>
                         </div>
                     </div>
-                    <div class="mb-3">
-                        <input type="submit" class="btn btn-primary btn-block btn-lg" id="form-submit-btn">
-                    </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" class="btn btn-primary" id="form-submit-btn">
+                </div>
+            </form>
         </div>
     </div>
 </div>

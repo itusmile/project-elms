@@ -32,13 +32,14 @@ include_once 'includes/header.php'
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-spriped table-boredered text-center">
+                    <table class="table table-spriped table-boredered text-center" id="table-employee">
                         <thead>
                             <tr>
-                                <th>Username</th>
+                                <th>Leave Count</th>
                                 <th>Full Name</th>
                                 <th>Department</th>
                                 <th>Quota</th>
+                                <th>Status</th>
                                 <th>Action</th>
                             </tr>
                         </thead>

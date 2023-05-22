@@ -32,7 +32,7 @@ include_once 'includes/header.php'
         <div class="row">
             <div class="col-lg-12">
                 <div class="table-responsive">
-                    <table class="table table-spriped table-boredered text-center">
+                    <table class="table table-spriped table-boredered text-center" id="table-leave">
                         <thead>
                             <tr>
                                 <th>ID</th>

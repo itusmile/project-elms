@@ -26,14 +26,15 @@ if (isset($_GET['read'])) {
     $reqs = $req->read();
     $output = '';
     if ($reqs) {
+        // print_r($reqs);
         foreach ($reqs as $row) {
             $output .= "<tr>
             <td>" . $row['leave_id'] . "</td>
             <td>" . $row['first_name'] . ' ' . $row['last_name'] . ' '  . $row['request'] . "</td>
             <td>" . $row['start_date'] . ' - ' . $row['end_date'] . ' ' . $row['count'] . ' ' . $row['unit'] . "</td>
-            <td>" . $row['status'] . "</td>
+            <td>" . $row['leave_status'] . "</td>
             <td>
-                <a href='#' id='" . $row['leave_id'] . "' class='btn btn-success btn-sm rounded py-0 editlink' data-bs-toggle='modal' data-bs-target='#editUserModal'>Edit</a>
+                <a href='#' id='" . $row['leave_id'] . "' class='btn btn-success btn-sm rounded py-0 editlink' data-bs-toggle='modal' data-bs-target='#formLeaveModal'>Edit</a>
                 <a href='#' id='" . $row['leave_id'] . "' class='btn btn-danger btn-sm rounded py-0 deletelink'>Delete</a>
             </td>
             </tr>";

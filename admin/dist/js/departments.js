@@ -1,10 +1,10 @@
 const addBtn = document.getElementById("btnAddNewDepartment");
 
-const table = document.getElementById("table-department");
-const tbody = table.getElementsByTagName("tbody")[0];
+const tableId = document.getElementById("table-department");
+const tbody = tableId.getElementsByTagName("tbody")[0];
 
-const form = document.getElementById("department-form");
-const hiddenId = form.getElementsByClassName("hidden-id")[0];
+const formId = document.getElementById("department-form");
+const hiddenId = formId.getElementsByClassName("hidden-id")[0];
 const btnSubmitForm = document.getElementById("form-submit-btn");
 
 // const viewModalId = document.getElementById("viewDepartmentModal");
@@ -38,10 +38,10 @@ addBtn.addEventListener("click", async () => {
   btnSubmitForm.value = "Add";
 });
 
-form.addEventListener("submit", async (e) => {
+formId.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new FormData(form);
+  const formData = new FormData(formId);
 
   if (hiddenId.value == "") {
     formData.append("add", 1);
@@ -49,7 +49,7 @@ form.addEventListener("submit", async (e) => {
     formData.append("update", 1);
   }
 
-  if (form.checkValidity() === false) {
+  if (formId.checkValidity() === false) {
     e.preventDefault();
     e.stopPropagation();
     form.classList.add("was-validated");
@@ -63,8 +63,8 @@ form.addEventListener("submit", async (e) => {
     });
     const response = await data.text();
     showAlert.innerHTML = response;
-    form.reset();
-    form.classList.remove("was-validated");
+    formId.reset();
+    formId.classList.remove("was-validated");
     formModal.hide();
     fetchAllDepartments();
   }
@@ -110,6 +110,6 @@ const deleteDepartment = async (id) => {
 
 formModalId.addEventListener("hidden.bs.modal", () => {
   formModalTitle.innerHTML = "";
-  form.reset();
+  formId.reset();
   btnSubmitForm.value = "";
 });

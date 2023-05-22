@@ -35,7 +35,7 @@ include_once 'includes/header.php'
                     <table class="table table-spriped table-boredered text-center" id="table-department">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>Member</th>
                                 <th>Department Name</th>
                                 <th>Sort Name</th>
                                 <th>Action</th>

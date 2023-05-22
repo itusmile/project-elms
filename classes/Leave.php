@@ -14,9 +14,19 @@ class Leave extends Config
             unit,
             employee_id,
             note,
-            status
+            leave_status
         )
-        VALUES(:request, :start_date, :end_date, :count, :unit, :employee_id, :note, :status)";
+        VALUES(
+            :request,
+            :start_date,
+            :end_date,
+            :count,
+            :unit,
+            :employee_id,
+            :note,
+            :status
+        )";
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'request' => $request,
@@ -33,7 +43,13 @@ class Leave extends Config
 
     public function read()
     {
-        $sql = "SELECT * FROM tbl_leaves l INNER JOIN tbl_employees e ON l.employee_id = e.employee_id";
+        $sql = "SELECT
+            *
+        FROM
+            tbl_leaves l
+        INNER JOIN tbl_employees e ON
+            l.employee_id = e.employee_id";
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute();
         $result = $stmt->fetchAll();
@@ -65,7 +81,12 @@ class Leave extends Config
 
     public function delete($id)
     {
-        $sql = "DELETE FROM tbl_leaves WHERE leave_id = :id";
+        $sql = "DELETE
+        FROM
+            tbl_leaves
+        WHERE
+            leave_id = :id";
+
         $stmt = $this->conn->prepare($sql);
         $stmt->execute([
             'id' => $id
